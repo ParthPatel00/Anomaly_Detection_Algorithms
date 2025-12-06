@@ -1,0 +1,33 @@
+{
+  "shape": [
+    5000,
+    49
+  ],
+  "label_distribution": {
+    "0": 4402,
+    "1": 598
+  },
+  "attack_categories": {
+    "Generic": 411,
+    "Exploits": 72,
+    " Fuzzers ": 31,
+    "DoS": 29,
+    " Reconnaissance ": 28,
+    " Fuzzers": 11,
+    "Reconnaissance": 7,
+    "Analysis": 4,
+    "Backdoor": 2,
+    "Backdoors": 2,
+    " Shellcode ": 1
+  },
+  "data_types": {
+    "int64": 28,
+    "float64": 12,
+    "object": 9
+  },
+  "missing_values": {
+    "ct_flw_http_mthd": 2689,
+    "is_ftp_login": 2816,
+    "attack_cat": 4402
+  }
+}
