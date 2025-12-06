@@ -1,0 +1,338 @@
+Loading UNSW-NB15 dataset...
+Loaded 49 feature names
+Loaded UNSW-NB15_1.csv: (700001, 49)
+Loaded UNSW-NB15_2.csv: (700001, 49)
+Loaded UNSW-NB15_3.csv: (700001, 49)
+Loaded UNSW-NB15_4.csv: (440044, 49)
+Combined dataset shape: (2540047, 49)
+Sampled dataset shape: (50000, 49)
+
+Normal samples: 43720
+Attack samples: 6280
+Preprocessing features...
+Cleaning data...
+  Missing values found: 69408
+  Outliers clipped (1st-99th percentile): 12203 values
+Numerical features: 39
+Categorical features: 8
+Encoding categorical features (Hybrid Approach)...
+  Low cardinality (one-hot, <= 15 unique): ['proto', 'state', 'service', 'ct_ftp_cmd']
+  High cardinality (frequency): ['srcip', 'sport', 'dstip', 'dsport']
+  One-hot encoded: 4 features → 32 columns
+  Frequency encoded: 4 features → 4 columns
+  Total categorical features after encoding: 36
+  Numerical features (scaled): 39
+  Categorical features (encoded): 36
+  Total features: 75
+Preprocessing features...
+Cleaning data...
+  Missing values found: 28754
+  Outliers clipped (1st-99th percentile): 4963 values
+Numerical features: 39
+Categorical features: 8
+Encoding categorical features (Hybrid Approach)...
+  One-hot encoded: 4 features → 32 columns
+  Frequency encoded: 4 features → 4 columns
+  Total categorical features after encoding: 36
+  Numerical features (scaled): 39
+  Categorical features (encoded): 36
+  Total features: 75
+
+Training set (NORMAL ONLY): 34976 samples
+Test set (Normal + Attack): 15024 samples
+Normal samples in test: 8744
+Attack samples in test: 6280
+
+============================================================
+DATA READY FOR TRAINING
+============================================================
+Training set: (27980, 75)
+Validation set: (6996, 75)
+Test set: (15024, 75)
+Input features: 75
+
+📊 Data for all models:
+  Training samples: 27980
+  Test samples: 15024
+  Test normal: 8744, Test attacks: 6280
+
+  ______________________________
+
+
+============================================================
+CORRELATION ANALYSIS
+============================================================
+Analyzing 39 numerical features...
+
+
+📊 Highly Correlated Feature Pairs (|r| > 0.8):
+--------------------------------------------------
+  trans_depth <-> ct_flw_http_mthd: 1.000
+  Stime <-> Ltime: 1.000
+  swin <-> dwin: 0.997
+  tcprtt <-> synack: 0.994
+  dloss <-> Dpkts: 0.992
+  dbytes <-> dloss: 0.990
+  tcprtt <-> ackdat: 0.989
+  synack <-> ackdat: 0.973
+  dbytes <-> Dpkts: 0.965
+  Spkts <-> Dpkts: 0.965
+
+✓ Found 39 highly correlated pairs (potential redundancy)
+
+
+
+______________________________
+
+
+============================================================
+PCA - DIMENSIONALITY REDUCTION
+============================================================
+
+
+📊 PCA Analysis Summary:
+  - Total features: 75
+  - Components for 95% variance: 11
+  - Components for 99% variance: 21
+  - First 2 components explain: 77.5% variance
+
+✓ PCA reveals potential dimensionality reduction from 75 to 11 features
+
+
+______________________________
+
+
+============================================================
+FEATURE IMPORTANCE ANALYSIS
+============================================================
+Using test samples: 15024
+
+🌲 Training Random Forest for Feature Importance...
+📊 Calculating Mutual Information...
+
+
+📊 Top 10 Features by Random Forest Importance:
+  feature_3: 0.1496
+  feature_29: 0.1445
+  feature_73: 0.1220
+  feature_71: 0.1209
+  feature_8: 0.0686
+  feature_2: 0.0476
+  feature_24: 0.0450
+  feature_15: 0.0371
+  feature_4: 0.0337
+  feature_1: 0.0334
+
+📊 Top 10 Features by Mutual Information:
+  feature_73: 0.6414
+  feature_71: 0.6348
+  feature_3: 0.6329
+  feature_29: 0.6316
+  feature_1: 0.5737
+  feature_7: 0.5091
+  feature_15: 0.4988
+  feature_4: 0.4748
+  feature_2: 0.4342
+  feature_8: 0.4017
+
+
+
+
+  ______________________________
+
+============================================================
+UNSUPERVISED ANOMALY DETECTION METHODS
+============================================================
+Training samples: 27980, Test samples: 15024
+Features: 75
+
+🧠 Training Autoencoder...
+✓ Autoencoder compiled successfully!
+  ✓ Accuracy: 0.9679, F1: 0.9629, AUC: 0.9873
+  Training time: 28.73s, Threshold: 1.304026
+
+🌲 Training Isolation Forest...
+  ✓ Accuracy: 0.9426, F1: 0.9357, AUC: 0.9709
+  Training time: 0.78s
+
+🎯 Training One-Class SVM...
+  ✓ Accuracy: 0.9408, F1: 0.9338, AUC: 0.9915
+  Training time: 29.30s
+
+🎯 Training One-Class SVM with PCA...
+  PCA reduced features: 75 → 16 (95% variance)
+  ✓ Accuracy: 0.9400, F1: 0.9330, AUC: 0.9920
+  Training time: 10.01s (speedup: 2.9x)
+
+📍 Training Local Outlier Factor...
+  ✓ Accuracy: 0.9235, F1: 0.9149, AUC: 0.9801
+  Training time: 6.74s
+
+============================================================
+✓ All anomaly detection methods trained successfully!
+============================================================
+
+
+
+  ______________________________
+
+============================================================
+CLUSTERING-BASED ANALYSIS
+============================================================
+
+📊 K-Means Clustering...
+  ✓ K-Means (k=2): Accuracy: 0.0815, F1: 0.1447
+
+📍 DBSCAN Clustering...
+  ✓ DBSCAN: Clusters found: 29, Noise points: 917
+  ✓ DBSCAN: Accuracy: 0.6122, F1: 0.1904
+
+🔮 Gaussian Mixture Model...
+  ✓ GMM: Accuracy: 0.0107, F1: 0.0000, AUC: 0.9909
+
+
+✓ Clustering analysis complete!
+
+
+
+  ______________________________
+
+======================================================================
+COMPREHENSIVE MODEL COMPARISON - ANOMALY DETECTION
+======================================================================
+
+📊 Model Comparison Table:
+             Method      Category Accuracy Precision Recall F1-Score ROC-AUC Training Time Features
+        Autoencoder Deep Learning   0.9679    0.9297 0.9986   0.9629  0.9873        28.73s      NaN
+   Isolation Forest    Tree-based   0.9426    0.8797 0.9992   0.9357  0.9709         0.78s      NaN
+      One-Class SVM  Kernel-based   0.9408    0.8759 1.0000   0.9338  0.9915        29.30s      NaN
+One-Class SVM (PCA)  Kernel + PCA   0.9400    0.8746 0.9997   0.9330  0.9920        10.01s 16 (PCA)
+                LOF Density-based   0.9235    0.8550 0.9839   0.9149  0.9801         6.74s      NaN
+            K-Means    Clustering   0.0815         -      -   0.1447       -           NaN      NaN
+             DBSCAN    Clustering   0.6122         -      -   0.1904       -           NaN      NaN
+                GMM    Clustering   0.0107         -      -   0.0000  0.9909           NaN      NaN
+
+
+🏆 Best Method by F1-Score: Isolation Forest (0.9357)
+🏆 Best Method by ROC-AUC: One-Class SVM (0.9915)
+
+✓ Note: Autoencoder results will be added after training in the next section
+
+
+
+  ______________________________
+============================================================
+ROC CURVES COMPARISON - ANOMALY DETECTION METHODS
+============================================================
+
+
+📊 Anomaly Detection Methods Comparison:
+------------------------------------------------------------------------------------------
+Method               Accuracy     Precision    Recall       F1-Score     ROC-AUC     
+------------------------------------------------------------------------------------------
+Autoencoder          0.9679       0.9297       0.9986       0.9629       0.9873
+Isolation Forest     0.9426       0.8797       0.9992       0.9357       0.9709
+One-Class SVM        0.9408       0.8759       1.0000       0.9338       0.9915
+One-Class SVM (PCA)  0.9400       0.8746       0.9997       0.9330       0.9920
+LOF                  0.9235       0.8550       0.9839       0.9149       0.9801
+------------------------------------------------------------------------------------------
+
+🏆 Best Method by ROC-AUC: One-Class SVM (PCA) (0.9920)
+
+✓ ROC and PR curves plotted for all anomaly detection methods
+
+
+
+
+  ______________________________
+============================================================
+CONFUSION MATRICES & SCORE DISTRIBUTIONS
+============================================================
+
+
+
+✓ Confusion matrices and score distributions plotted for all methods
+
+
+
+
+  ______________________________
+======================================================================
+PCA IMPACT ANALYSIS: ONE-CLASS SVM COMPARISON
+======================================================================
+
+📊 One-Class SVM: Full Features vs PCA-Reduced Features
+----------------------------------------------------------------------
+Metric               Full Features        PCA (95% var)        Difference     
+----------------------------------------------------------------------
+Features             75                   16                   -59            
+Accuracy             0.9408               0.9400               -0.08%         
+Precision            0.8759               0.8746               -0.13%         
+Recall               1.0000               0.9997               -0.03%         
+F1-Score             0.9338               0.9330               -0.09%         
+ROC-AUC              0.9915               0.9920               +0.05%         
+Training Time        29.30s               10.01s               2.9x faster    
+
+
+======================================================================
+📈 CONCLUSION:
+  ✓ PCA reduced features from 75 to 16
+  ✓ Training time improved by 2.9x
+  ✓ ROC-AUC improved by 0.05%
+  → PCA is BENEFICIAL for One-Class SVM on this dataset
+======================================================================
+
+
+
+
+  ______________________________
+
+============================================================
+DATA BALANCING TECHNIQUES
+============================================================
+
+Original class distribution:
+  Normal (0): 8744
+  Attack (1): 6280
+
+📊 Applying SMOTE...
+  After SMOTE: Normal=6120, Attack=6120
+  ✓ RF with SMOTE: Accuracy=0.9933, F1=0.9921
+
+📊 Applying ADASYN...
+  After ADASYN: Normal=6120, Attack=6216
+  ✓ RF with ADASYN: Accuracy=0.9933, F1=0.9921
+
+📊 Applying Random Undersampling...
+  After Undersampling: Normal=4396, Attack=4396
+  ✓ RF with Undersampling: Accuracy=0.9933, F1=0.9921
+
+
+✓ Data balancing analysis complete!
+
+
+
+  ______________________________
+
+  ============================================================
+ENSEMBLE ANOMALY DETECTION
+============================================================
+Combining methods for ensemble: ['Autoencoder', 'Isolation Forest', 'One-Class SVM', 'LOF']
+(Note: One-Class SVM (PCA) excluded to avoid duplicate SVM bias)
+
+🗳️ Majority Voting Ensemble...
+  Majority threshold: 3 of 4 methods
+  ✓ Accuracy: 0.9654, F1: 0.9602
+
+📊 Score Averaging Ensemble...
+  ✓ Accuracy: 0.9708, F1: 0.9663, AUC: 0.9870
+
+⚖️ Weighted Voting Ensemble...
+  Weights: {'Autoencoder': '0.251', 'Isolation Forest': '0.247', 'One-Class SVM': '0.252', 'LOF': '0.249'}
+  ✓ Accuracy: 0.9708, F1: 0.9663, AUC: 0.9871
+
+🔗 Stacking Ensemble with Meta-Learner...
+  ✓ Accuracy: 0.9902, F1: 0.9885, AUC: 0.9959
+
+
+✓ Ensemble analysis complete!
